@@ -1,0 +1,22 @@
+\subsection{Statusaktiviteter (Mikkel)}
+
+
+
+
+I opgavebeskrivelsen står der:
+
+\textit{Der skal være faste aktiviteter for registrering af ting som ferie, sygdom, kurser med videre, som ikke kan pålignes det enkelte projekt.}
+
+Dette blev tolket som, at der skal være en fast måde for medarbejdere at oprette aktiviteter der har statuser som ferie, sygdom, kurser osv. Statusaktiviteter skal opføre sig som aktiviteter i store træk, men ikke tilhøre noget projekt. For at opfylde disse krav, blev det valgt at statusaktiviteter udvider klassen for aktiviteter. Der er dog visse væsentlige forskelle mellem de to.
+
+\begin{itemize}
+    \item \textbf{Statusaktiviteter tilhører ikke noget projekt:} Da en statusaktivitet kun er relevant for den enkelte bruger, ville det ikke give mening at tilføje sådanne en til et projekt. Dette har dog den sideeffekt, at man ikke kan tilgå en statusaktivitet gennem projektsiden. Man kan kun komme ind på en statusaktivitet gennem brugersiden. Da der ikke er noget projekt, er der heller ikke nogen projektleder. Brugeren kan derfor ændre informationerne for statusaktiviteten, selvom brugeren ikke er projektleder.
+    \item \textbf{Statusaktiviteter har en enum Status:} For let at holde styr på hvilke aktiviteter der er statusaktiviteter, og hvilken status de har, bruger den interne logik i programmet en enum \texttt{Status}. Denne status interagerer med brugerens tilgælgelighed. Under statusaktivitetens varelse, vil brugeren der er tilmeldt statusaktiviteten blive set som have den tilhørende status. Hvis, f.eks. en bruger laver en "Syg" statusaktivitet, vil dén bruger ikke være tilgængelig mellem statusaktivitetens start- og sluttidspunkt.
+    \item \textbf{Man kan ikke ændre navnet på en statusaktivitet:} Da statusaktiviteter fremgår på listen over aktiviteter som en bruger er en del af, var det vigtigt at statusaktiviteter fremgik tydeligt. Det blev derfor valgt, at statusaktiviteter ligger i en seperat liste hos den enkelte bruger. Dette gør, at statusaktiviteter kan blive tilføjet til listen over en brugers aktiviteter først. Da man ikke kan gå ind på en statusaktivitet med mindre man går gennem brugeren der er tilmeldt denne, er det vigtigt at statusaktiviteten nemt viser at den er en statusaktivitet, samt hvilken type status den har. I stedet for at have et seperat felt på aktivitetsiden der viser aktivitetens status, blev det valgt blot at ligges i navnet på statusaktiviteten. Man kan derved som bruger ikke ændre navnet, da det ikke længere ville være representativt.
+\end{itemize}
+
+
+
+
+
+

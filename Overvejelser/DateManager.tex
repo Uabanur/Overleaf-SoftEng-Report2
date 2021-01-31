@@ -1,0 +1,5 @@
+\subsection{DateManager (Roar)}
+
+Dette program bruger datoer til mange forskellige opgaver: Start/slut datoer for projekter og aktiviteter, time registrering m.m. Derfor blev det nødvendigt at finde en god måde at håndtere brugen af datoer på. Til dette, blev \texttt{DateManager} klassen skabt, som indeholder en håndful metoder til at konvertere datoer og ændre format af dato. I de fleste tilfælde er datoer til for at brugeren kan se tidsfrister, hvilket gjorde at datoen endte med at blive repræsenteret som en \texttt{String} i programmet (uden for \texttt{DateManager} klassen). Alt der har at gøre med modifikation og sammenligning af datoer forgår i \texttt{DateManager} ved brug af hjælpe metoderne i klassen.
+
+Ved at have en specifik klasse til datoer, er det også nemt at mocke klassen til at teste.

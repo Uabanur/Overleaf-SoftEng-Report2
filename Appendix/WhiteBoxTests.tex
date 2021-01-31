@@ -1,0 +1,338 @@
+\subsection{White box test kode (Magnus)}
+
+\subsubsection{Tilføj medarbejder til program}
+\begin{lstlisting}
+
+  @Test
+  public void TestA() throws Exception {
+    int amount = app.getEmployees().size();
+    int expected = 10;
+    
+    assert amount == expected : "Amount is not equal to expected value in pre-condition";
+    
+    assertEquals(amount, expected);
+
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+
+    amount = app.getEmployees().size();
+    expected++;
+    assertEquals(amount, expected);
+  }
+
+  @Test
+  public void TestB() throws Exception {
+    int amount = app.getEmployees().size();
+    int expected = 10;
+    assertEquals(amount, expected); 
+
+    Employee susan = app.newEmployee("sb", "Susan Baker");
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+
+    amount = app.getEmployees().size();
+    expected += 2;
+    assertEquals(amount, expected); 
+
+  }
+
+  @Test
+  public void TestC() throws Exception {
+
+    int amount = app.getEmployees().size();
+    int expected = 10;
+    assertEquals(amount, expected); 
+
+    Employee susan = app.newEmployee("sb", "Susan Baker");
+    Employee carl = app.newEmployee("cj", "Caroline Janson");
+
+    Employee check = app.getEmployees().get(app.getNumberOfEmployees() - 1);
+    assertEquals(carl.getInitials(), check.getInitials()); 
+    assertEquals(carl.getName(), check.getName());
+
+    try {
+      app.newEmployee("cj", "Carl Janson");
+      fail();
+    } catch (NotUniqueInitialsException e) {
+    }
+
+    amount = app.getEmployees().size();
+    expected += 2;
+    assertEquals(amount, expected);
+
+  }
+
+  @Test
+  public void TestD() throws Exception {
+    int amount = app.getEmployees().size();
+    int expected = 10;
+    assertEquals(amount, expected); 
+
+    Employee emp = app.newEmployee("cj", "Carl Janson");
+
+    Employee check = app.getEmployees().get(app.getNumberOfEmployees() - 1);
+    assertEquals(emp.getInitials(), check.getInitials()); 
+    assertEquals(emp.getName(), check.getName()); 
+
+    try {
+      app.newEmployee("cj", "Carl Janson");
+      fail();
+    } catch (NotUniqueInitialsException e) {
+    }
+
+    amount = app.getEmployees().size();
+    expected++;
+    assertEquals(amount, expected); 
+  }
+\end{lstlisting}
+
+\subsubsection{Opret ny aktivitet i projekt}
+
+\begin{lstlisting}
+
+  @Test
+  public void testA() throws Exception {
+
+    assertTrue(true); 
+    String name = "Oprydning";
+
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 10);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+    Project master = app.newProject(carl, "Master Project", start, end);
+
+    Activity oprydning = app.newActivity("Oprydning", master);
+
+    assertEquals(oprydning.getName(), name); 
+    assertEquals(oprydning.getProject().toString(), master.toString()); 
+    assertTrue(master.getActivities().contains(oprydning)); 
+  }
+
+  @Test
+  public void testB() throws Exception {
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    Employee susan = app.newEmployee("sb", "Susan Baker");
+
+    app.setActiveEmployee(susan);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 10);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+    Project master = app.newProject(carl, "Master Project", start, end);
+
+    int activityCount = master.getActivities().size();
+
+    assertNotEquals(susan, master.getProjectLeader());
+
+    try {
+      Activity oprydning = app.newActivity("Oprydning", master);
+      fail();
+    } catch (Exception e) {
+
+    }
+
+    assertEquals(activityCount, master.getActivities().size());
+  }
+
+  @Test
+  public void testC() throws Exception {
+    assertTrue(true);
+
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    Employee susan = app.newEmployee("sb", "Susan Baker");
+    app.setActiveEmployee(susan);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 10);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+
+    boolean activityAdded = false;
+    try {
+      Activity oprydning = app.newActivity("Oprydning", null);
+      fail();
+    } catch (Exception e) {
+
+    }
+
+    assertFalse(activityAdded); 
+  }
+
+  @Test
+  public void testD() throws Exception {
+    assertTrue(app.getActiveEmployee() == null); 
+    boolean testFailed = false; 
+    
+    
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    Employee susan = app.newEmployee("sb", "Susan Baker");
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 10);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+    Project master = app.newProject(carl, "Master Project", start, end);
+    
+    
+
+    try {
+      Activity oprydning = app.newActivity("Oprydning", master);
+      fail();
+    } catch (Exception e) {
+
+    }
+    
+    assertFalse(testFailed); 
+  }
+\end{lstlisting}
+
+\subsubsection{Opret ny statusaktivitet}
+
+\begin{lstlisting}
+public class TestActivityStatusNew extends SampleData {
+
+  @Test
+  public void testA() throws Exception {
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    assertEquals(carl.getStatusActivities().size(), 0);
+ 
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 10);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+
+    StatusActivity syg = app.newStatusActivity(carl, Status.SYG, start, end);
+
+    assertFalse(app.employeeIsAvailable(carl)); 
+  }
+
+  @Test
+  public void testB() throws Exception {    
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    
+    assertEquals(carl.getStatusActivities().size(), 0); 
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 51);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 52);
+
+    StatusActivity syg = app.newStatusActivity(carl, Status.SYG, start, end);
+    
+    assertTrue(app.employeeIsAvailable(carl)); 
+  }
+
+  @Test
+  public void testC() throws Exception {
+
+    assertTrue(true); 
+    
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    
+    
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 51);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 52);
+
+    try {
+      // status null does not correspond to SYG, FERIE or KURSUS
+      StatusActivity doed = app.newStatusActivity(carl, null, start, end);
+      fail();
+    } catch (Exception e) {
+
+    }
+
+    assertTrue(app.employeeIsAvailable(carl));
+  }
+
+  @Test
+  public void testD() throws Exception {
+    assertTrue(true); 
+    
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 51);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 52);
+
+    try {
+      // null (no employee) cannot create a status activity
+      StatusActivity syg = app.newStatusActivity(null, Status.SYG, start, end);
+      fail();
+    } catch (Exception e) {
+
+    }
+    
+    assertTrue(app.employeeIsAvailable(carl));
+  }
+
+}
+
+\end{lstlisting}
+
+\subsubsection{Tjek en medarbejders tilgængelighed}
+\begin{lstlisting}
+public class TestEmployeeIsAvailable extends SampleData {
+
+  @Test
+  public void TestA() throws Exception {
+    assertTrue(true); 
+        
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    assertTrue(app.employeeIsAvailable(carl));
+
+  }
+
+  @Test
+  public void TestB() throws Exception {
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 49);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+
+    assertTrue(app.employeeIsAvailable(carl));     
+    StatusActivity kursus = app.newStatusActivity(carl, Status.KURSUS, start, end);
+
+    assertTrue(app.employeeIsAvailable(carl));
+
+  }
+
+  @Test
+  public void TestC() throws Exception {
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+    assertTrue(app.employeeIsAvailable(carl)); 
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 1);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+
+    StatusActivity syg = app.newStatusActivity(carl, Status.SYG, start, end);
+
+    assertFalse(app.employeeIsAvailable(carl));
+  }
+
+  @Test
+  public void TestD() throws Exception {
+
+    
+    Employee carl = app.newEmployee("cj", "Carl Janson");
+    app.setActiveEmployee(carl);
+
+    String start = app.getDateManager().getWWYYYYStringByIntegers(2017, 1);
+    String end = app.getDateManager().getWWYYYYStringByIntegers(2017, 50);
+
+    Project master = app.newProject(carl, "Master Project", start, end);
+
+    // add 20 activities to carl
+    for (int i = 0; i < 20; i++) {
+      Activity newActivity = app.newActivity("aktivitet " + i, 0, start, end, master);
+      app.addEmployeeToActivity(newActivity, carl);
+    }
+    
+    assertEquals(carl.getActivities().size(), 20); 
+
+    Activity newActivity = app.newActivity("aktivitet " + 21, 0, start, end, master);
+    app.addEmployeeToActivity(newActivity, carl);
+    
+    assertFalse(app.employeeIsAvailable(carl));
+  }
+}
+\end{lstlisting}

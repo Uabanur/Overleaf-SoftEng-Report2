@@ -1,0 +1,11 @@
+\subsection{Designmønstre (Mikkel)}
+
+I programmet er der blevet indført en GUI som den primære måde brugeren interagerer med programmet på. Herfra skal brugeren have adgang til flere forskellige typer data, som f.eks. projekter og aktiviteter. For at muliggøre dette, er der behov for en masse forskellige klasser. Dette kan dog nemt gå hen og give meget rodet kode. En af måderne man kan holde styr på koden er ved at følge Model-View-Controller designmønsteret, som der er gjort i dette program. Designmønsteret kommer til udtryk ved at programmet er delt op i tre hovedsageligt uafhængige dele. 
+
+View-klasserne består af \texttt{JavaFX} fxml klasser. Disse klasser ligger i \texttt{gui}-pakken, og de har navne som \texttt{activityPage.fxml}, da de styrer hver deres del af den visuelle brugergrænseflade. 
+
+Controller-delen af programmet ligger hovedsageligt i klasser med navne som \texttt{ActivityController.java}.
+
+Hver gang brugeren interagerer med brugergrænsefladen, kaldes en metode i en View eller Control kasse, der så kommunikerer med resten af programmet, hovedsageligt gennem \texttt{app}.
+
+De primære model-klasser er \texttt{App}, \texttt{Activity}, \texttt{Employee}, \texttt{Project}. 

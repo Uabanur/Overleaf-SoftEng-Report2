@@ -1,0 +1,76 @@
+%\documentclass{article}
+%\usepackage[utf8]{inputenc}
+
+\input{Header.tex}
+
+\title{02161 Software Engineering 1 \\
+Obligatorisk opgave: Rapport 2}
+\author{\textbf{Gruppe 13:} \\ 
+s144063	Magnus Middelboe Søborg-Madsen \\
+s151952	Jens Carl Moesgård Eschen \\
+s154666	Mikkel Clausen Knudsen \\
+s144107	Roar Nind Steffensen}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\begin{figure}[H]
+    \centering
+%    \includegraphics[width = 0.5\textwidth]{Figurer/forside.png}
+    \includegraphics[width = 0.7\textwidth]{Figurer/totrin.pdf}
+\end{figure}
+
+\vspace{0.5 cm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{Figurer/DTU3CMYK.eps}
+\end{figure}
+
+\pagenumbering{gobble}
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\section{Ansvarsoversigt}
+\input{Ansvarsoversigt.tex}
+
+\newpage
+\section{Introduktion}
+\input{Introduktion.tex}
+
+\section{Project management}
+\input{ProjectManagement/Git.tex}
+\input{ProjectManagement/Logbog.tex}
+\input{ProjectManagement/Tidslinje.tex}
+
+\section{Test}
+\input{Test/SystematiskeTestsBlackBox.tex}
+\input{Test/SystematiskeTestsWhiteBox.tex}
+\input{Test/DesignByContract.tex}
+
+\section{Implementering}
+\input{Implementering/Designmoenstre.tex}
+\input{Implementering/Applikationen.tex}
+\input{Implementering/GUI.tex}
+
+\section{Overvejelser og refleksioner}
+\input{Overvejelser/ManglendeLogin.tex}
+\input{Overvejelser/DateManager.tex}
+\input{Overvejelser/StatusAktiviteter.tex}
+\input{Overvejelser/DreamList.tex}
+
+\section{Konklusion}
+\input{Konklusion.tex}
+
+\newpage
+\section{Appendix}
+\input{Appendix/Guide.tex}
+%\input{Appendix/WhiteBoxTests.tex}
+\end{document}

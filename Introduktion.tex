@@ -1,0 +1,26 @@
+\subsection{Introduktion (Magnus)}
+I denne rapport vil vi dokumentere, hvordan vi test-drevet implementerede applikationen ud fra specifikationerne beskrevet i Rapport 1.
+
+I afsnit 3 \textit{Project Management} beskrives, hvordan versionskontrol og logbog blev anvendt til at strukturere projektet. Et overblik over projektets faser gives.
+
+I afsnit 4 \textit{Test} gennemgås planer for systematiske tests, både Black Box tests (ud fra use cases) og White Box tests inklusiv Design by contract (ud fra metoder). Kodedækning præsenteres.
+
+I afsnit 5 \textit{Implementering} gennemgås først det anvendte designmønster (Model-View-Controller), derefter de primære klasser i hovedprogrammet, derefter GUI'ens opbygning og interaktion med brugeren.
+
+I afsnit 6 \textit{Overvejelser og refleksioner} reflekteres over uklarheder i projektbeskrivelsen, de overvejelser der blev gjort under forløbet, og hvordan uklarhederne blev håndteret: manglende adgangskontrol (ingen passwords), opløsning af tid på dags- eller ugeniveau, og statusaktiviteter. 
+
+\subsection{Guide: Hvordan programmet køres (Magnus)}
+
+Forudantagelse: JRE 1.8 er installeret. Hvis en tidligere JRE er valgt, er JavaFX tilføjet til Eclipse. Der antages at Java asserts i Run Configurations er slået fra.
+
+\begin{enumerate}
+\item I Eclipse, File $\rightarrow$ Import $\rightarrow$ Project from Folder or Archive $\rightarrow$ Archive $\rightarrow$ Vælg SE13.zip $\rightarrow$ Finish
+\item I Project Explorer $\rightarrow$ SoftEnGruppe13 $\rightarrow$ højreklik
+\item Build Path $\rightarrow$ Configure Build Path
+\item I fanen "Order and Export" $\rightarrow$ check "JRE System Library" $\rightarrow$ klik Apply og OK
+\item I SoftEngGruppe13 $\rightarrow$ app.gui $\rightarrow$ Main.java $\rightarrow$ højreklik
+\item Run As $\rightarrow$ Java Application
+\end{enumerate}
+
+
+Programmet kører nu gennem den grafiske brugergrænseflade. Der er tilføjet sample data i form af nogle medarbejdere, projekter, aktiviteter og timeregistreringer. For billeder (screenshots) af ovenstående proces, se i Appendix.

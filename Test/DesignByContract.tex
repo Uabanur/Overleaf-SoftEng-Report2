@@ -1,0 +1,61 @@
+\subsection{Design by contract (Jens)}
+I dette afsnit kan pre- og post-betingelserne for metoderne i afsnit \ref{whitebox} ses.
+
+\subsubsection{\texttt{newEmployee}-metoden}
+Pre-betingelser omhandler her, at de informationer der er givet til den nye medarbejder er legitime. Post-betingelser omhandler, at medarbejderen blev oprettet i systemet.
+
+\begin{lstlisting}
+//  (pre-condition)
+assert initials != null && name != null : "Arguments in newEmployee can't be null";
+boolean uniqueInitials = true;
+for (Employee oldEmps : getEmployees())
+    uniqueInitials &= !oldEmps.getInitials().equals(initials);
+
+assert uniqueInitials : "initials argument must be unique for list employees";
+int previousEmployeeAmount = employees.size();
+// Method call etc. 
+//  (post-condition)
+assert employees.size() == previousEmployeeAmount + 1 : "The employee has not been added to the list";
+\end{lstlisting}
+
+\subsubsection{\texttt{newActivity}-metoden}
+Pre- og post-betingelser for \texttt{newActivity} omhandler det samme som for \texttt{newEmployee}, men det checkes om aktiviteten er blevet tilføjet til projektet i stedet for en liste i \texttt{App}.
+
+\begin{lstlisting}
+//  (pre-condition)
+assert name != null && project != null && expectedHours >= 0 && activityStart != null && activityEnd != null : "Field(s) in Activity constructor are null";
+// Method calls etc.
+//  (post-condition)
+assert project.getActivities().size() == activityAmount + 1 : "Activity was not added to project"; 
+\end{lstlisting}
+
+\subsubsection{\texttt{newStatusActivity}-metoden}
+Pre-betingelser omhandler igen at statusaktiviteten har legitime informationer givet. Post-betingelser onhandler, at statusaktiviteten blev tilføjet til den ønskede medarbejder.
+
+\begin{lstlisting}
+//  (pre-condition)
+assert emp != null && status != null && activityStart != null && activityEnd != null 
+    : "Arguments for newStatusActvity cant be null";  
+int previousAmountOfStatusActivities = emp.getStatusActivities().size();
+// Method call etc.
+//  (post-condition)
+assert emp.getStatusActivities().size() == previousAmountOfStatusActivities + 1 
+    : "Status activity has not been added to the employee";
+\end{lstlisting}
+
+
+\subsubsection{\texttt{employeeIsAvailable}-metoden}
+Pre-betingelser omhandler at medarbejderen ikke er \texttt{null} og at alle han/hendes statusaktiviteter har ikke-null start- og slutdatoer. Post-betingelsen bekræfter at hvis medarbejderen ikke er tilgængelig, så er det enten fordi at han/hende har for mange nuværende aktiviteter eller fordi han/hende har en nuværende status aktivitet. Hvis medarbejderen er tilgængelig er det fordi ingen af disse to ting er sande. 
+\begin{lstlisting}
+//  (pre-condition)
+assert emp != null : "emp argument in employeeIsAvailable can't be null";
+boolean dateIsNull = false;
+for (StatusActivity sa : emp.getStatusActivities()) {
+    dateIsNull |= sa.getActivityStart() == null || sa.getActivityEnd() == null;
+}
+assert !dateIsNull : "All status activities must have start and end date";
+// Method call etc.
+//  (post-condition)
+assert isAvailable && !(hasCurrentStatus || hasTooManyActivities) 
+: "Employee cannot be available with current status or too many activities";
+\end{lstlisting}
